@@ -7,7 +7,6 @@
     "phaser": "^3.24.1"
   },
   "devDependencies": {
-    "expose-loader": "^1.0.0",
     "ts-loader": "^8.0.2",
     "typescript": "^3.9.7",
     "webpack": "^4.44.1",
