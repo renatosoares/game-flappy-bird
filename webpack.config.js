@@ -10,15 +10,18 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.ts$/, loader: 'ts-loader', exclude: '/node_modules/' },
-            { test: /phaser\.js$/, loader: 'expose-loader?Phaser' },
+            { 
+                test: /\.ts$/,
+                use: 'ts-loader',
+                exclude: '/node_modules/'
+            }
         ],
     },
     devServer: {
         contentBase: path.resolve(__dirname, './'),
         publicPath: '/dist/',
         host: '127.0.0.1',
-        port: 8080,
+        port: 8081,
     },
     resolve: {
         extensions: ['.ts', '.js'],
