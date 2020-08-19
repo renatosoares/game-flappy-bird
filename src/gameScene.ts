@@ -1,4 +1,5 @@
-import 'phaser';
+import * as Phaser from 'phaser';
+
 export class GameScene extends Phaser.Scene {
     delta: number;
     lastStarTime: number;
@@ -71,7 +72,7 @@ export class GameScene extends Phaser.Scene {
             );
         };
     }
-    
+
     private onFall(star: Phaser.Physics.Arcade.Image): () => void {
         return function () {
             star.setTint(0xff0000);
@@ -80,13 +81,18 @@ export class GameScene extends Phaser.Scene {
                 100,
                 function (star) {
                     star.destroy();
+                    if (this.starsFallen > 2) {
+                        this.scene.start('ScoreScene', {
+                            starsCaught: this.starsCaught,
+                        });
+                    }
                 },
                 [star],
                 this
             );
         };
     }
-    
+
     private emitStar(): void {
         var star: Phaser.Physics.Arcade.Image;
         var x = Phaser.Math.Between(25, 775);

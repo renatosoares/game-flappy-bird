@@ -1,14 +1,16 @@
-import 'phaser';
+import * as Phaser from 'phaser';
 import { WelcomeScene } from './welcomeScene';
 import { GameScene } from './gameScene';
+import { ScoreScene } from './scoreScene';
 
 const config: Phaser.Types.Core.GameConfig = {
-    width: 390,
+    width: 800,
     height: 600,
     parent: 'game',
     scene: [
         WelcomeScene, //
         GameScene,
+        ScoreScene,
     ],
     physics: {
         default: 'arcade',
