@@ -13,14 +13,16 @@ export class GameScene extends Phaser.Scene {
             key: 'GameScene',
         });
     }
+
     init(/*params: any*/): void {
         this.delta = 1000;
         this.lastStarTime = 0;
         this.starsCaught = 0;
         this.starsFallen = 0;
     }
+
     preload(): void {
-        this.load.path = './src/assets/images/';
+        this.load.path = '/assets/images/';
         this.load.image('star', 'star.png');
         this.load.image('sand', 'sand.jpg');
     }
