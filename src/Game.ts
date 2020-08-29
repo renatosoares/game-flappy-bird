@@ -1,24 +1,27 @@
 import * as Phaser from 'phaser';
-import { WelcomeScene } from './welcomeScene';
-import { GameScene } from './gameScene';
-import { ScoreScene } from './scoreScene';
+import { GameScene } from './Scenes/GameScene';
 
 const config: Phaser.Types.Core.GameConfig = {
-    width: 800,
+    width: 390,
     height: 600,
     parent: 'game',
     scene: [
-        WelcomeScene, //
-        GameScene,
-        ScoreScene,
+        GameScene, //
     ],
+    input: {
+        keyboard: true,
+    },
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false,
+            gravity: {
+                y: 300,
+            },
         },
     },
-    backgroundColor: '#29217E',
+    render: {
+        pixelArt: true,
+    },
 };
 
 export class Game extends Phaser.Game {
