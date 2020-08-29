@@ -22,7 +22,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload(): void {
-        this.load.path = '/assets/images/';
+        this.load.path = 'assets/images/';
         this.load.image('star', 'star.png');
         this.load.image('sand', 'sand.jpg');
     }
