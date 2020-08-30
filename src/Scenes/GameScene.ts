@@ -29,6 +29,6 @@ export class GameScene extends Phaser.Scene {
     }
 
     update(): void {
-        // TODO
+        this.bird.update();
     }
 }
