@@ -1,0 +1,11 @@
+{
+    "flappyBirdPack": {
+        "files": [
+            {
+                "type": "image",
+                "key": "bird",
+                "url": "assets/images/bird.png"
+            }
+        ]
+    }
+}
