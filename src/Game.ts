@@ -14,6 +14,7 @@ const config: Phaser.Types.Core.GameConfig = {
     physics: {
         default: 'arcade',
         arcade: {
+            debug: true,
             gravity: {
                 y: 300,
             },
@@ -24,12 +25,8 @@ const config: Phaser.Types.Core.GameConfig = {
     },
 };
 
-export class Game extends Phaser.Game {
-    constructor(config: Phaser.Types.Core.GameConfig) {
-        super(config);
-    }
-}
+export class Game extends Phaser.Game {}
 
 window.addEventListener('load', () => {
-    let game = new Game(config);
+    const game = new Game(config);
 });

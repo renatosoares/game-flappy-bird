@@ -18,6 +18,8 @@ export class Bird extends Phaser.GameObjects.Sprite {
 
         this.scene.physics.world.enable(this);
 
+        this.scene.physics.world.gravity.set(0, 100);
+
         this.jumpKey = this.scene.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
@@ -32,6 +34,8 @@ export class Bird extends Phaser.GameObjects.Sprite {
 
         if (this.jumpKey.isDown && !this.isFlapping) {
             this.isFlapping = true;
+
+            this.scene.physics.moveTo(this.body.gameObject, 0, -350);
 
             this.scene.tweens.add({
                 targets: this,
