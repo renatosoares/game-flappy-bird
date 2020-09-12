@@ -3,6 +3,11 @@
         "files": [
             {
                 "type": "image",
+                "key": "background",
+                "url": "assets/images/bg.png"
+            },
+            {
+                "type": "image",
                 "key": "bird",
                 "url": "assets/images/bird.png"
             }
