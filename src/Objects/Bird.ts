@@ -3,6 +3,7 @@ import * as Phaser from 'phaser';
 export default class Bird extends Phaser.GameObjects.Sprite {
     public body: Phaser.Physics.Arcade.Body;
     private jumpKey: Phaser.Input.Keyboard.Key;
+    private isDead: boolean;
     private isFlapping: boolean;
 
     constructor(params) {
@@ -12,6 +13,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
 
+        this.isDead = false;
         this.isFlapping = false;
 
         this.setScale(3);
@@ -28,8 +30,12 @@ export default class Bird extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
     }
 
-    public setDead(dead): void {
-        // TODO
+    public setDead(dead: boolean): void {
+        this.isDead = dead;
+    }
+
+    public getDead(): boolean {
+        return this.isDead;
     }
 
     update(): void {
