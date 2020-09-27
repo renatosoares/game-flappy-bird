@@ -47,17 +47,27 @@ export class GameScene extends Phaser.Scene {
     }
 
     update(): void {
-        this.background.tilePositionX += 4;
-        this.bird.update();
-        this.physics.overlap(
-            this.bird,
-            this.pipes,
-            function () {
-                this.bird.setDead(true);
-            },
-            null,
-            this
-        );
+        if (!this.bird.getDead()) {
+            this.background.tilePositionX += 4;
+            this.bird.update();
+            this.physics.overlap(
+                this.bird,
+                this.pipes,
+                function () {
+                    this.bird.setDead(true);
+                },
+                null,
+                this
+            );
+        } else {
+            Phaser.Actions.Call(
+                this.pipes.getChildren(),
+                function (pipe: Pipe) {
+                    pipe.body.setVelocityX(0);
+                },
+                this
+            );
+        }
     }
 
     private newPipes(): void {
