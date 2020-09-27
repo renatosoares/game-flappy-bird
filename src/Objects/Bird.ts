@@ -43,6 +43,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
             this.angle += 2;
         }
 
+        if (this.y + this.height > this.scene.sys.canvas.height) {
+            this.isDead = true;
+        }
+
         if (this.jumpKey.isDown && !this.isFlapping) {
             this.isFlapping = true;
             this.body.setVelocityY(-350);
