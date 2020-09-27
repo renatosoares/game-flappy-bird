@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0](https://github.com/renatosoares/game-flappy-bird/tree/0.4.0) - 2020-09-27
+
+### Added
+
+-   Collision with enemies and damage.
+
 ## [0.3.0](https://github.com/renatosoares/game-flappy-bird/tree/0.3.0) - 2020-09-12
 
 ### Added
