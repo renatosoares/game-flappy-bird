@@ -83,7 +83,7 @@ export class GameScene extends Phaser.Scene {
             );
 
             if (this.bird.y > this.sys.canvas.height) {
-                this.scene.pause();
+                this.scene.start('ScoreScene');
             }
         }
     }

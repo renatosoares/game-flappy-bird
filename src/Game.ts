@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import { GameScene } from './Scenes/GameScene';
+import { ScoreScene } from './Scenes/ScoreScene';
 
 const config: Phaser.Types.Core.GameConfig = {
     width: 390,
@@ -7,6 +8,7 @@ const config: Phaser.Types.Core.GameConfig = {
     parent: 'game',
     scene: [
         GameScene, //
+        ScoreScene,
     ],
     input: {
         keyboard: true,
