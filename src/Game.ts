@@ -1,13 +1,15 @@
 import * as Phaser from 'phaser';
 import { GameScene } from './Scenes/GameScene';
 import { ScoreScene } from './Scenes/ScoreScene';
+import { WelcomeScene } from './Scenes/WelcomeScene';
 
 const config: Phaser.Types.Core.GameConfig = {
     width: 390,
     height: 600,
     parent: 'game',
     scene: [
-        GameScene, //
+        WelcomeScene, //
+        GameScene,
         ScoreScene,
     ],
     input: {
