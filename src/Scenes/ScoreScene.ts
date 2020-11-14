@@ -14,16 +14,13 @@ export class ScoreScene extends Phaser.Scene {
     preload(): void {
         this.load.image('buttonBG', 'assets/sprites/button-bg.png');
 
-        // this.registry.values.ranking = [{ name: 'Peter', score: 100 }];
         this.registry.values.ranking = JSON.parse(
             localStorage.getItem('ranking')
         );
 
         if (this.registry.values.ranking === null) {
             this.registry.values.ranking = [];
-        } else if (this.registry.values.ranking > 1) {
-            // FIXME - parei aqui
-
+        } else if (this.registry.values.ranking.length > 1) {
             this.registry.values.ranking.sort(function (
                 a: { score: number },
                 b: { score: number }
@@ -46,15 +43,25 @@ export class ScoreScene extends Phaser.Scene {
             { name: 'Luke', score: this.registry.values.score },
         ];
 
+        this.registry.values.ranking.sort(function (
+            a: { score: number },
+            b: { score: number }
+        ) {
+            return b.score - a.score;
+        });
+
+        if (this.registry.values.ranking.length > 14) {
+            let overrun = this.registry.values.ranking.length - 14;
+
+            for (overrun > 0; overrun--; ) {
+                this.registry.values.ranking.pop();
+            }
+        }
+
         localStorage.setItem(
             'ranking',
             JSON.stringify(this.registry.values.ranking)
         );
-
-        // text.setText([
-        //     `Score:  ${this.data.get('score')}`,
-        //     `Score:  ${this.data.get('score')}`,
-        // ]);
 
         this.registry.values.ranking.forEach(
             (item: { name: string; score: integer }) => {
@@ -70,7 +77,7 @@ export class ScoreScene extends Phaser.Scene {
             fill: '#00ff00',
         });
 
-        this.add.container(190, 300, [bg, textBg]);
+        this.add.container(190, 530, [bg, textBg]);
 
         bg.setInteractive();
 
