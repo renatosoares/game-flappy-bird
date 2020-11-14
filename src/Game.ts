@@ -8,9 +8,9 @@ const config: Phaser.Types.Core.GameConfig = {
     height: 600,
     parent: 'game',
     scene: [
+        ScoreScene,
         WelcomeScene, //
         GameScene,
-        ScoreScene,
     ],
     input: {
         keyboard: true,
