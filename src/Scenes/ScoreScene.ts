@@ -215,51 +215,5 @@ export class ScoreScene extends Phaser.Scene {
                 }
             }
         });
-
-        input.on(
-            'pointermove',
-            function (pointer, x, y) {
-                const cx = Phaser.Math.Snap.Floor(x, 52 * scaleSize, 0, true);
-                const cy = Phaser.Math.Snap.Floor(y, 64 * scaleSize, 0, true);
-                const char = chars[cy][cx];
-
-                cursor.x = cx;
-                cursor.y = cy;
-
-                block.x = input.x - 10 + cx * (52 * scaleSize);
-                block.y = input.y - 2 + cy * (64 * scaleSize);
-            },
-            this
-        );
-
-        input.on(
-            'pointerup',
-            function (pointer, x, y) {
-                const cx = Phaser.Math.Snap.Floor(x, 52, 0, true);
-                const cy = Phaser.Math.Snap.Floor(y, 64, 0, true);
-                const char = chars[cy][cx];
-
-                cursor.x = cx;
-                cursor.y = cy;
-
-                block.x = input.x - 10 + cx * (52 * scaleSize);
-                block.y = input.y - 2 + cy * (64 * scaleSize);
-
-                if (char === '<' && name.length > 0) {
-                    //  Rub
-                    name = name.substr(0, name.length - 1);
-
-                    playerText.text = name;
-                } else if (char === '>' && name.length > 0) {
-                    //  Submit
-                } else if (name.length < 3) {
-                    //  Add
-                    name = name.concat(char);
-
-                    playerText.text = name;
-                }
-            },
-            this
-        );
     }
 }
