@@ -98,18 +98,11 @@ export class ScoreScene extends Phaser.Scene {
         //     },
         //     this
         // );
-        this.text = this.add.text(10, 150, 'Move the mouse', {
-            font: '16px Courier',
-            fill: '#00ff00',
-        });
+
         this.renderRanking();
     }
 
-    update() {
-        var pointer = this.input.activePointer;
-
-        this.text.setText(['x: ' + pointer.x, 'y: ' + pointer.y]);
-    }
+    update() {}
 
     private renderRanking() {
         const scaleSize = 0.7;
@@ -146,28 +139,35 @@ export class ScoreScene extends Phaser.Scene {
             .setScale(scaleSize);
 
         const legend = this.add
-            .bitmapText(80, 260, 'arcade', 'RANK  SCORE   NAME')
-            .setTint(0xff00ff);
+            .bitmapText(10, 160, 'arcade', 'RANK  SCORE   NAME', 29)
+            .setTint(0xff00ff)
+            .setScale(scaleSize);
 
         this.add
-            .bitmapText(80, 310, 'arcade', '1ST   50000    ')
-            .setTint(0xff0000);
+            .bitmapText(10, 210, 'arcade', '1ST   50000    ', 29)
+            .setTint(0xff0000)
+            .setScale(scaleSize);
         this.add
-            .bitmapText(80, 360, 'arcade', '2ND   40000    ICE')
-            .setTint(0xff8200);
+            .bitmapText(10, 260, 'arcade', '2ND   40000    ICE', 29)
+            .setTint(0xff8200)
+            .setScale(scaleSize);
         this.add
-            .bitmapText(80, 410, 'arcade', '3RD   30000    GOS')
-            .setTint(0xffff00);
+            .bitmapText(10, 310, 'arcade', '3RD   30000    GOS', 29)
+            .setTint(0xffff00)
+            .setScale(scaleSize);
         this.add
-            .bitmapText(80, 460, 'arcade', '4TH   20000    HRE')
-            .setTint(0x00ff00);
+            .bitmapText(10, 360, 'arcade', '4TH   20000    HRE', 29)
+            .setTint(0x00ff00)
+            .setScale(scaleSize);
         this.add
-            .bitmapText(80, 510, 'arcade', '5TH   10000    ETE')
-            .setTint(0x00bfff);
+            .bitmapText(10, 410, 'arcade', '5TH   10000    ETE', 29)
+            .setTint(0x00bfff)
+            .setScale(scaleSize);
 
         const playerText = this.add
-            .bitmapText(560, 310, 'arcade', name)
-            .setTint(0xff0000);
+            .bitmapText(315, 210, 'arcade', name, 29)
+            .setTint(0xff0000)
+            .setScale(scaleSize);
 
         this.input.keyboard.on('keyup', function (event) {
             if (event.keyCode === 37) {
@@ -198,6 +198,7 @@ export class ScoreScene extends Phaser.Scene {
                 //  Enter or Space
                 if (cursor.x === 9 && cursor.y === 2 && name.length > 0) {
                     //  Submit
+                    console.log(name);
                 } else if (
                     cursor.x === 8 &&
                     cursor.y === 2 &&
