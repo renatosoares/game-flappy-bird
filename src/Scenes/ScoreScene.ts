@@ -57,12 +57,21 @@ export class ScoreScene extends Phaser.Scene {
             this
         );
 
-        const leaderBoard = [];
-        this.data.set('score', this.registry.values.score);
         const text = this.add.text(10, 10, '', {
             font: '27px Courier',
             fill: '#00ff00',
         });
+
+        text.setText(this.leaderBoard());
+
+        this.renderRanking();
+    }
+
+    update() {}
+
+    private leaderBoard(): Array<string> {
+        const leaderBoard = [];
+        this.data.set('score', this.registry.values.score);
 
         this.registry.values.ranking = [
             ...this.registry.values.ranking,
@@ -95,14 +104,10 @@ export class ScoreScene extends Phaser.Scene {
             }
         );
 
-        text.setText(leaderBoard);
-
-        this.renderRanking();
+        return leaderBoard;
     }
 
-    update() {}
-
-    private renderRanking() {
+    private renderRanking(): void {
         const scaleSize = 0.7;
         const chars = [
             ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
