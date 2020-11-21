@@ -41,63 +41,61 @@ export class ScoreScene extends Phaser.Scene {
     }
 
     create(): void {
-        // let leaderBoard = [];
-        // this.data.set('score', this.registry.values.score);
-        // const text = this.add.text(10, 10, '', {
-        //     font: '27px Courier',
-        //     fill: '#00ff00',
-        // });
+        const textTryAgain = this.add
+            .bitmapText(70, 560, 'arcade', 'TRY AGAIN', 29)
+            .setTint(0xff00ff);
 
-        // this.registry.values.ranking = [
-        //     ...this.registry.values.ranking,
-        //     { name: 'Luke', score: this.registry.values.score },
-        // ];
+        textTryAgain.setInteractive({
+            cursor: 'pointer',
+        });
 
-        // this.registry.values.ranking.sort(function (
-        //     a: { score: number },
-        //     b: { score: number }
-        // ) {
-        //     return b.score - a.score;
-        // });
+        textTryAgain.once(
+            'pointerup',
+            function () {
+                this.scene.start('GameScene');
+            },
+            this
+        );
 
-        // if (this.registry.values.ranking.length > 14) {
-        //     let overrun = this.registry.values.ranking.length - 14;
+        const leaderBoard = [];
+        this.data.set('score', this.registry.values.score);
+        const text = this.add.text(10, 10, '', {
+            font: '27px Courier',
+            fill: '#00ff00',
+        });
 
-        //     for (overrun > 0; overrun--; ) {
-        //         this.registry.values.ranking.pop();
-        //     }
-        // }
+        this.registry.values.ranking = [
+            ...this.registry.values.ranking,
+            { name: 'Luke', score: this.registry.values.score },
+        ];
 
-        // localStorage.setItem(
-        //     'ranking',
-        //     JSON.stringify(this.registry.values.ranking)
-        // );
+        this.registry.values.ranking.sort(function (
+            a: { score: number },
+            b: { score: number }
+        ) {
+            return b.score - a.score;
+        });
 
-        // this.registry.values.ranking.forEach(
-        //     (item: { name: string; score: integer }) => {
-        //         leaderBoard.push(`${item.name} : ${item.score}`);
-        //     }
-        // );
+        if (this.registry.values.ranking.length > 14) {
+            let overrun = this.registry.values.ranking.length - 14;
 
-        // text.setText(leaderBoard);
+            for (overrun > 0; overrun--; ) {
+                this.registry.values.ranking.pop();
+            }
+        }
 
-        // const bg = this.add.image(0, 0, 'buttonBG');
-        // const textBg = this.add.text(-30, -20, 'PLAY', {
-        //     font: '27px Courier',
-        //     fill: '#00ff00',
-        // });
+        localStorage.setItem(
+            'ranking',
+            JSON.stringify(this.registry.values.ranking)
+        );
 
-        // this.add.container(190, 530, [bg, textBg]);
+        this.registry.values.ranking.forEach(
+            (item: { name: string; score: integer }) => {
+                leaderBoard.push(`${item.name} : ${item.score}`);
+            }
+        );
 
-        // bg.setInteractive();
-
-        // bg.once(
-        //     'pointerup',
-        //     function () {
-        //         this.scene.start('GameScene');
-        //     },
-        //     this
-        // );
+        text.setText(leaderBoard);
 
         this.renderRanking();
     }
