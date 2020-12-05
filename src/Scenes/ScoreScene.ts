@@ -57,57 +57,47 @@ export class ScoreScene extends Phaser.Scene {
             this
         );
 
-        const text = this.add.text(10, 10, '', {
-            font: '27px Courier',
-            fill: '#00ff00',
-        });
-
-        text.setText(this.leaderBoard());
-
         this.renderRanking();
     }
 
     update() {}
 
-    private leaderBoard(): Array<string> {
-        const leaderBoard = [];
-        this.data.set('score', this.registry.values.score);
+    private leaderBoard(
+        name: string,
+        self: ScoreScene
+    ): Array<{ name: string; score: integer }> {
+        self.data.set('score', self.registry.values.score);
 
-        this.registry.values.ranking = [
-            ...this.registry.values.ranking,
-            { name: 'Luke', score: this.registry.values.score },
+        self.registry.values.ranking = [
+            ...self.registry.values.ranking,
+            { name: name, score: self.registry.values.score },
         ];
 
-        this.registry.values.ranking.sort(function (
+        self.registry.values.ranking.sort(function (
             a: { score: number },
             b: { score: number }
         ) {
             return b.score - a.score;
         });
 
-        if (this.registry.values.ranking.length > 14) {
-            let overrun = this.registry.values.ranking.length - 14;
+        if (self.registry.values.ranking.length > 7) {
+            let overrun = self.registry.values.ranking.length - 7;
 
             for (overrun > 0; overrun--; ) {
-                this.registry.values.ranking.pop();
+                self.registry.values.ranking.pop();
             }
         }
 
         localStorage.setItem(
             'ranking',
-            JSON.stringify(this.registry.values.ranking)
+            JSON.stringify(self.registry.values.ranking)
         );
 
-        this.registry.values.ranking.forEach(
-            (item: { name: string; score: integer }) => {
-                leaderBoard.push(`${item.name} : ${item.score}`);
-            }
-        );
-
-        return leaderBoard;
+        return self.registry.values.ranking;
     }
 
     private renderRanking(): void {
+        const self = this;
         const scaleSize = 0.7;
         const chars = [
             ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
@@ -146,33 +136,12 @@ export class ScoreScene extends Phaser.Scene {
             .setTint(0xff00ff)
             .setScale(scaleSize);
 
-        this.add
-            .bitmapText(10, 210, 'arcade', '1ST   50000    ', 29)
-            .setTint(0xff0000)
-            .setScale(scaleSize);
-        this.add
-            .bitmapText(10, 260, 'arcade', '2ND   40000    ICE', 29)
-            .setTint(0xff8200)
-            .setScale(scaleSize);
-        this.add
-            .bitmapText(10, 310, 'arcade', '3RD   30000    GOS', 29)
+        const playerText = this.add
+            .bitmapText(150, 130, 'arcade', name, 29)
             .setTint(0xffff00)
             .setScale(scaleSize);
-        this.add
-            .bitmapText(10, 360, 'arcade', '4TH   20000    HRE', 29)
-            .setTint(0x00ff00)
-            .setScale(scaleSize);
-        this.add
-            .bitmapText(10, 410, 'arcade', '5TH   10000    ETE', 29)
-            .setTint(0x00bfff)
-            .setScale(scaleSize);
 
-        const playerText = this.add
-            .bitmapText(315, 210, 'arcade', name, 29)
-            .setTint(0xff0000)
-            .setScale(scaleSize);
-
-        this.input.keyboard.on('keyup', function (event) {
+        this.input.keyboard.on('keyup', function (event: { keyCode: number }) {
             if (event.keyCode === 37) {
                 //  left
                 if (cursor.x > 0) {
@@ -201,7 +170,42 @@ export class ScoreScene extends Phaser.Scene {
                 //  Enter or Space
                 if (cursor.x === 9 && cursor.y === 2 && name.length > 0) {
                     //  Submit
-                    console.log(name);
+                    const ranking = self.leaderBoard(name, self);
+
+                    ranking.forEach((item, index) => {
+                        const color = [
+                            0xff0000,
+                            0xff8200,
+                            0xffff00,
+                            0x00ff00,
+                            0x00bfff,
+                            0x0027ff,
+                            0xff00ff,
+                        ];
+
+                        const placement = [
+                            'ST',
+                            'ND',
+                            'RD',
+                            'TH',
+                            'TH',
+                            'TH',
+                            'TH',
+                        ];
+
+                        self.add
+                            .bitmapText(
+                                10,
+                                210 + 50 * index,
+                                'arcade',
+                                `${index + 1}${placement[index]}   ${(
+                                    '0000' + item.score
+                                ).slice(-5)}    ${item.name}`,
+                                29
+                            )
+                            .setTint(color[index])
+                            .setScale(scaleSize);
+                    });
                 } else if (
                     cursor.x === 8 &&
                     cursor.y === 2 &&
