@@ -7,24 +7,37 @@ export class WelcomeScene extends Phaser.Scene {
         });
     }
 
+    preload(): void {
+        this.load.bitmapFont(
+            'arcade',
+            'assets/fonts/bitmap/arcade.png',
+            'assets/fonts/bitmap/arcade.xml'
+        );
+    }
+
     create(): void {
-        const text = this.add.text(10, 10, 'start game', {
-            font: '27px Courier',
-            fill: '#22aa99',
+        const textStartGame = this.add
+            .bitmapText(60, 260, 'arcade', 'START GAME', 29)
+            .setTint(0x22aa99);
+
+        textStartGame.setInteractive({
+            cursor: 'pointer',
         });
 
-        text.setInteractive({ cursor: 'pointer' });
-
-        text.on('pointerover', (pointer, justOver) => {
-            text.setFill('#00ff00');
+        textStartGame.on('pointerover', (pointer, justOver) => {
+            textStartGame.setTint(0x00ff00);
         });
 
-        text.on('pointerout', (pointer, justOver) => {
-            text.setFill('#22aa99');
+        textStartGame.on('pointerout', (pointer, justOver) => {
+            textStartGame.setTint(0x22aa99);
         });
 
-        text.once('pointerup', () => {
-            this.scene.start('GameScene');
-        });
+        textStartGame.once(
+            'pointerup',
+            function () {
+                this.scene.start('GameScene');
+            },
+            this
+        );
     }
 }

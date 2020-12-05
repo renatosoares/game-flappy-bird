@@ -49,6 +49,14 @@ export class ScoreScene extends Phaser.Scene {
             cursor: 'pointer',
         });
 
+        textTryAgain.on('pointerover', (pointer, justOver) => {
+            textTryAgain.setTint(0xffff00);
+        });
+
+        textTryAgain.on('pointerout', (pointer, justOver) => {
+            textTryAgain.setTint(0xff00ff);
+        });
+
         textTryAgain.once(
             'pointerup',
             function () {
