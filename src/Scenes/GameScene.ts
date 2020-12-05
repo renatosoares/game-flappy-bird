@@ -7,6 +7,7 @@ export class GameScene extends Phaser.Scene {
     private background: Phaser.GameObjects.TileSprite;
     private bird: Bird;
     private pipes: Phaser.GameObjects.Group;
+    private scoreText: Phaser.GameObjects.BitmapText;
 
     constructor() {
         super({
@@ -15,7 +16,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     init(): void {
-        // TODO
+        this.registry.set('score', -1);
     }
 
     preload(): void {
@@ -23,6 +24,15 @@ export class GameScene extends Phaser.Scene {
     }
 
     create(): void {
+        this.scoreText = this.add
+            .bitmapText(
+                this.sys.canvas.width / 2 - 14,
+                30,
+                'font',
+                this.registry.values.score
+            )
+            .setDepth(2);
+
         this.background = this.add
             .tileSprite(0, 0, 390, 600, 'background')
             .setOrigin(0, 0);
@@ -36,11 +46,15 @@ export class GameScene extends Phaser.Scene {
             key: 'bird',
         });
 
+        this.increasesScore();
         this.newPipes();
 
         this.time.addEvent({
-            delay: 1300,
-            callback: this.newPipes,
+            delay: 1500,
+            callback: () => {
+                this.increasesScore();
+                this.newPipes();
+            },
             callbackScope: this,
             loop: true,
         });
@@ -53,7 +67,7 @@ export class GameScene extends Phaser.Scene {
             this.physics.overlap(
                 this.bird,
                 this.pipes,
-                function () {
+                () => {
                     this.bird.setDead(true);
                 },
                 null,
@@ -62,11 +76,15 @@ export class GameScene extends Phaser.Scene {
         } else {
             Phaser.Actions.Call(
                 this.pipes.getChildren(),
-                function (pipe: Pipe) {
+                (pipe: Pipe) => {
                     pipe.body.setVelocityX(0);
                 },
                 this
             );
+
+            if (this.bird.y > this.sys.canvas.height) {
+                this.scene.start('ScoreScene');
+            }
         }
     }
 
@@ -84,6 +102,11 @@ export class GameScene extends Phaser.Scene {
                 }
             }
         }
+    }
+
+    private increasesScore(): void {
+        this.registry.values.score++;
+        this.scoreText.setText(this.registry.values.score);
     }
 
     private addPipe(x: number, y: number, frame: number): void {
